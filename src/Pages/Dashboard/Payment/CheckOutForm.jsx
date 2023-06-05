@@ -15,9 +15,11 @@ const CheckOutForm = ({ cart, price }) => {
   const [transactionId, setTransactionId] = useState("");
 
   useEffect(() => {
-    axiosSecure.post("/cerate-payment-intent", { price }).then((res) => {
-      setClientSecret(res.data.clientSecret);
-    });
+    if (price > 0) {
+      axiosSecure.post("/cerate-payment-intent", { price }).then((res) => {
+        setClientSecret(res.data.clientSecret);
+      });
+    }
   }, [price, axiosSecure]);
 
   const handleSubmit = async (event) => {
